@@ -19,8 +19,9 @@ version:
 
 clean:
 	./setup.py clean
-	$(RM) -fr build
+	$(RM) -r build
 	$(RM) -f dpkg
+	$(RM) -r htmlcov
 	dh_clean || true
 
 dist-clean: clean

@@ -57,7 +57,7 @@ class PackratAgent( Daemon ):
 
   def do_loadconfig( self ):
     logging.info( 'Loading Config...' )
-    config = configparser.ConfigParser()
+    config = configparser.ConfigParser( interpolation=None )
     try:
       if not config.read( '/etc/packrat/mirror.conf' ):
         logging.critical( 'Error opening config file' )
