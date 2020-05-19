@@ -1,7 +1,7 @@
 import os
 import logging
 import shutil
-import gpgme
+import gpg
 import json
 
 from packratAgent.LocalRepoManager import LocalRepoManager, hashFile
@@ -110,7 +110,7 @@ class JSONManager( LocalRepoManager ):
       wrk.close()
 
     if self.gpg_key:
-      ctx = gpgme.Context()
+      ctx = gpg.Context()
       ctx.armor = True
       ctx.textmode = True
       key = ctx.get_key( self.gpg_key )
@@ -124,7 +124,7 @@ class JSONManager( LocalRepoManager ):
         plain = open( '{0}/MANIFEST_{1}.json'.format( base_path, arch ), 'rb' )
         sign = open( '{0}/MANIFEST_{1}.json.gpg'.format( base_path, arch ), 'wb' )
 
-        ctx.sign( plain, sign, gpgme.SIG_MODE_DETACH )
+        ctx.sign( plain, sign, gpg.constants.SIG_MODE_DETACH )
 
         plain.close()
         sign.close()

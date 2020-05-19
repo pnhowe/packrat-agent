@@ -1,7 +1,7 @@
 import os
 import time
 import logging
-import gpgme
+import gpg
 import shutil
 from packratAgent.yum.packages import YumLocalPackage
 import rpm
@@ -175,7 +175,7 @@ class YUMManager( LocalRepoManager ):
         self._writeArchMetadata( base_path, distro, distro_version )
 
     if self.gpg_key:
-      ctx = gpgme.Context()
+      ctx = gpg.Context()
       ctx.armor = True
       ctx.textmode = True
       key = ctx.get_key( self.gpg_key )
@@ -189,7 +189,7 @@ class YUMManager( LocalRepoManager ):
           plain = open( '{0}/repomd.xml'.format( base_path ), 'rb' )
           sign = open( '{0}/repomd.xml.asc'.format( base_path ), 'wb' )
 
-          ctx.sign( plain, sign, gpgme.SIG_MODE_DETACH )
+          ctx.sign( plain, sign, gpg.constants.SIG_MODE_DETACH )
 
           plain.close()
           sign.close()

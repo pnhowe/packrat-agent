@@ -3,6 +3,7 @@ from gzip import GzipFile
 from lzma import LZMAFile
 from tarfile import TarFile
 
+#  see https://github.com/viraptor/arpy/pull/5
 
 class Deb():
   def __init__( self, filename ):
