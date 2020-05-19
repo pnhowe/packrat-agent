@@ -31,12 +31,12 @@ example configuration::
   host: packrat.myco.com
   name: prod
   psk: prod_psk
-  proxy: http://proxy.inside.myco.com:3128/
+  proxy: http://proxy.site1.test:3128/
 
   [mirror]
   description: prod-mirror
   root_dir: /var/www/repo
-  gpg_sign_key: B2CAFB61
+  gpg_sign_key: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD
   state_db: /var/lib/packratAgent/state.db
   full_sync_interval: 900
   keep_file_list: /var/www/repo/repo-key
@@ -136,12 +136,8 @@ If you would like to have your repo signed::
 
 These Answers to the questions go with the example apache config, modify as needed::
 
- - 1 - RSA and RSA
- - (pick a key size) (2048)
- - (pick expiration length) (0)
- - real name = repo.< DOMAIN >
+ - real name (repo.< DOMAIN >, ie: repo.site1.test)
  - no email
- - no comment
  - Confirm
  - no password
 
@@ -151,23 +147,24 @@ Now we need to get the key where we can use it::
 
 for example::
 
-  /root/.gnupg/pubring.gpg
+  # gpg --list-keys
+  /root/.gnupg/pubring.kbx
   ------------------------
-  pub   2048R/B2CAFB61 2016-02-10
-  uid                  repo.test
-  sub   2048R/6F9893FE 2016-02-10
+  pub   rsa3072 2020-05-19 [SC] [expires: 2022-05-19]
+        FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD
+  uid           [ultimate] repo.site1.test
+  sub   rsa3072 2020-05-19 [E] [expires: 2022-05-19]
 
 
-This will list our newly created key, there are two parts to the key the Subkey (labeld with (sub)), this is what is used to sign the repo.  The other key is the Public Key (labeld with (pub)).
-edit /etc/packrat/mirror.conf and enter the hash ( ie: 6F9893FE ) as the gpg_sign_key.  NOTE: there is also a Private key (viewed with another option).  For more information about GPG and how
+edit /etc/packrat/mirror.conf and enter the hash ( ie: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD ) as the gpg_sign_key.  For more information about GPG and how
 the keys interact and their use see http://www.gnupg.org.  If you intend for your public key to be trusted long term or enfoce package security with signatures, you will want to export and store
 the Master Key Pair, see the gpnupg site for details on that. Now export the public key::
 
-  gpg --armor --output /var/www/repo/repo-key --export < the pub ie: B2CAFB61 >
+  gpg --armor --output /var/www/repo/repo-key --export < the public ie: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD >
 
 the path `/var/www/repo-key` should be where http clients can get to and download it, it is recomened to put it in the root of the http root directory.
 
-restart repoSyc/packratAgent you should now see messages like ::
+restart packratAgent you should now see messages like ::
 
   INFO:root:apt: Signing distro precise
   INFO:root:apt: Signing distro trusty
