@@ -21,7 +21,7 @@ list will be removed during the full sync scan.
 Configuration File
 ==================
 
-The Agent is configured with the /etc/packrat/mirror.conf file.  All information not contained in this file is
+The Agent is configured with the /etc/packrat-agent.conf file.  All information not contained in this file is
 maintained on the packrat server.  If you sign your repo/packages with packrat-agent, make sure to keep a backup
 of your encryption keys, this information is not stored on the packrat server.
 
@@ -122,7 +122,7 @@ Enable the repo Site::
   /etc/init.d/apache2 restart
 
 
-Next edit /etc/packrat/mirror.conf, set the host to the master packrat server, set the name and psk to the name and psk in the mirror entry on packrat,
+Next edit /etc/packrat-agent.conf, set the host to the master packrat server, set the name and psk to the name and psk in the mirror entry on packrat,
 if you need to use a proxy to get to the master packrat server, put that in.  If you did not use /var/www/repo as your http root directory, set root_dir
 to you http root directory.
 
@@ -156,7 +156,7 @@ for example::
   sub   rsa3072 2020-05-19 [E] [expires: 2022-05-19]
 
 
-edit /etc/packrat/mirror.conf and enter the hash ( ie: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD ) as the gpg_sign_key.  For more information about GPG and how
+edit /etc/packrat-agent.conf and enter the hash ( ie: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD ) as the gpg_sign_key.  For more information about GPG and how
 the keys interact and their use see http://www.gnupg.org.  If you intend for your public key to be trusted long term or enfoce package security with signatures, you will want to export and store
 the Master Key Pair, see the gpnupg site for details on that. Now export the public key::
 

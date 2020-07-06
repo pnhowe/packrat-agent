@@ -5,11 +5,10 @@ all:
 
 install:
 	mkdir -p $(DESTDIR)/usr/bin
-	mkdir -p $(DESTDIR)/etc/packrat
 	mkdir -p $(DESTDIR)/etc/apache2/sites-available
 
 	install -m 755 bin/packrat-agent $(DESTDIR)/usr/bin
-	install -m 644 mirror.conf.sample $(DESTDIR)/etc/packrat/mirror.conf
+	install -m 644 packrat-agent.conf $(DESTDIR)/etc/
 	install -m 644 apache.conf $(DESTDIR)/etc/apache2/sites-available/repo.conf
 
 	./setup.py install --root $(DESTDIR) --install-purelib=/usr/lib/python3/dist-packages/ --prefix=/usr --no-compile -O0
