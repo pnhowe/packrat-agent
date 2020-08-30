@@ -11,7 +11,7 @@ install:
 	install -m 644 packrat-agent.conf $(DESTDIR)/etc/
 	install -m 644 apache.conf $(DESTDIR)/etc/apache2/sites-available/repo.conf
 
-	./setup.py install --root $(DESTDIR) --install-purelib=/usr/lib/python3/dist-packages/ --prefix=/usr --no-compile -O0
+	./setup.py install --root=$(DESTDIR) --install-purelib=/usr/lib/python3/dist-packages/ --prefix=/usr --no-compile -O0
 
 version:
 	echo $(VERSION)

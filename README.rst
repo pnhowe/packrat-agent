@@ -143,24 +143,24 @@ These Answers to the questions go with the example apache config, modify as need
 
 Now we need to get the key where we can use it::
 
-  gpg --list-keys
+  gpg --list-keys --with-subkey-fingerprints 
 
 for example::
 
-  # gpg --list-keys
+  # gpg --list-keys --with-subkey-fingerprints
   /root/.gnupg/pubring.kbx
   ------------------------
-  pub   rsa3072 2020-05-19 [SC] [expires: 2022-05-19]
-        FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD
-  uid           [ultimate] repo.site1.test
-  sub   rsa3072 2020-05-19 [E] [expires: 2022-05-19]
+  pub   rsa3072 2018-06-13 [SC] [expires: 2020-06-12]
+        8BFE3D3D3945F40B1FDF16E06662EFCFB2B63C30
+  uid           [ultimate] testing
+  sub   rsa3072 2018-06-13 [E] [expires: 2020-06-12]
+        AC418843B048A55266269920B94271513106BFA6
 
-
-edit /etc/packrat-agent.conf and enter the hash ( ie: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD ) as the gpg_sign_key.  For more information about GPG and how
+edit /etc/packrat-agent.conf and enter the hash of the sub key ( ie: AC418843B048A55266269920B94271513106BFA6 ) as the gpg_sign_key.  For more information about GPG and how
 the keys interact and their use see http://www.gnupg.org.  If you intend for your public key to be trusted long term or enfoce package security with signatures, you will want to export and store
 the Master Key Pair, see the gpnupg site for details on that. Now export the public key::
 
-  gpg --armor --output /var/www/repo/repo-key --export < the public ie: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD >
+  gpg --armor --output /var/www/repo/repo-key --export < the pub key ie: FEAA6AF9B5B874A2B4D83FA7E9CFFF421740C9AD >
 
 the path `/var/www/repo-key` should be where http clients can get to and download it, it is recomened to put it in the root of the http root directory.
 
@@ -180,8 +180,3 @@ newer versions of gpg don't show they subkey fingerprint by default, add `--with
   $ gpg --list-keys --with-subkey-fingerprints
   /root/.gnupg/pubring.kbx
   ------------------------------
-  pub   rsa3072 2018-06-13 [SC] [expires: 2020-06-12]
-        8BFE3D3D3945F40B1FDF16E06662EFCFB2B63C30
-  uid           [ultimate] testing
-  sub   rsa3072 2018-06-13 [E] [expires: 2020-06-12]
-        AC418843B048A55266269920B94271513106BFA6

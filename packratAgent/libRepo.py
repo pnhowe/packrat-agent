@@ -231,7 +231,7 @@ class FileSystemMirror():
       found_file_list = set( found_file_list )
       for file_path in found_file_list - expected_file_list:
         logging.debug( 'libRepo: removing "%s"', file_path )
-        os.unlink( file_path )
+        os.unlink( file_path )  # TODO: also remove extra directories
 
     self._pruneBadFiles()
     self._retreiveMissingFiles()

@@ -114,7 +114,7 @@ class AptManager( LocalRepoManager ):
     full_path = os.path.join( base_path, file_path )
     wrk = open( full_path, 'w' )
     wrk.write( 'Component: {0}\n'.format( self.component ) )
-    wrk.write( 'Origin: Rubicon\n' )
+    wrk.write( 'Origin: Packrat\n' )
     wrk.write( 'Label: {0}\n'.format( self.repo_description ) )
     wrk.write( 'Architecture: {0}\n'.format( arch ) )
     wrk.write( 'Description: {0} of {1}\n'.format( self.repo_description, self.mirror_description ) )
@@ -165,7 +165,7 @@ class AptManager( LocalRepoManager ):
         self._writeArchMetadata( base_path, distro, arch, file_hashes, file_sizes )
 
       wrk = open( '{0}/Release'.format( base_path ), 'w' )
-      wrk.write( 'Origin: Rubicon\n' )
+      wrk.write( 'Origin: Packrat\n' )
       wrk.write( 'Label: {0}\n'.format( self.repo_description ) )
       wrk.write( 'Codename: {0}\n'.format( distro ) )
       wrk.write( 'Date: {0}\n'.format( datetime.utcnow().strftime( '%a, %d %b %Y %H:%M:%S UTC' ) ) )
