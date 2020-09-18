@@ -6,9 +6,10 @@ from distutils.command.build_py import build_py
 
 
 class build( build_py ):
-  def run( self ):
-    # get .pys
-    for package in self.packages:  # derived from build_py.run
+  def build_packages( self ):
+    # get all the .py files, unless they end in _test.py
+    # we don't need testing files in our published product
+    for package in self.packages:
       package_dir = self.get_package_dir( package )
       modules = self.find_package_modules( package, package_dir )
       for ( package2, module, module_file ) in modules:
@@ -17,11 +18,12 @@ class build( build_py ):
           continue
         self.build_module( module, module_file, package )
 
+
 setup( name='packrat-agent',
        version='0.9',
        description='Packrat Agent',
        author='Peter Howe',
-       author_email='peter.howe@emc.com',
+       author_email='pnhowe@gmail.com',
        packages=[ 'packratAgent', 'packratAgent/yum' ],
        cmdclass={ 'build_py': build }
        )
