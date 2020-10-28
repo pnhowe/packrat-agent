@@ -81,21 +81,17 @@ class YUMManager( LocalRepoManager ):
     file_path = os.path.join( dir_path, filename )
     if self.gpg_key:
       logging.info( 'yum: signing "%s"', temp_file )
-      if not rpm.addSign( path=temp_file, keyid=self.gpg_key, passPhrase='' ):
+      if not rpm.addSign( path=temp_file, keyid=self.gpg_key ):
         raise Exception( 'Error Signing "{0}"'.format( temp_file ) )
 
-#  in the stock python3-rpm addSign is missing due to (xenial):
-#  https://github.com/rpm-software-management/rpm/commit/eb632e5158fa4ef993b0e5df2a354f0be7a7a71d
+#  the stock python3-rpm addSign is broken on bionic:
 #  so, get and empty dir and:
 #  apt source python3-rpm
-#  cd rpm-4.12.0.1+dfsg1
-#  nano python/setup.py.in and change line 51 'b' to 's'
+#  apply patch from this bug: https://bugs.launchpad.net/ubuntu/+source/rpm/+bug/1776815
 #  dpkg-buildpackage -b
 #  cd ..
-#  dpkg -i python3-rpm_4.12.0.1+dfsg1-3build3_amd64.deb
+#  dpkg -i python3-rpm_4.14.1+dfsg1-2_amd64.deb
 #  all set
-#  bionic there is this bug: https://bugs.launchpad.net/ubuntu/+source/rpm/+bug/1776815
-#  follow simmaler steps
 
     shutil.move( temp_file, file_path )
     ( _, sha256, _ ) = hashFile( file_path )

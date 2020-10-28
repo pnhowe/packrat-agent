@@ -27,8 +27,8 @@ dist-clean: clean
 
 .PHONY:: all install clean dist-clean
 
-test-distros:
-	echo ubuntu-xenial
+test-blueprints:
+	echo ubuntu-bionic-base
 
 test-requires:
 	echo flake8 python3 python3-dateutil python3-pip python3-pytest python3-pytest-cov python3-cinp
@@ -39,10 +39,10 @@ lint:
 test:
 	py.test-3 -x --cov=packratAgent --cov-report html --cov-report term  -vv packratAgent
 
-.PHONY:: test-distrostest-requires lint test
+.PHONY:: test-blueprints test-requires lint test
 
-dpkg-distros:
-	echo ubuntu-xenial
+dpkg-blueprints:
+	echo ubuntu-bionic-base
 
 dpkg-requires:
 	echo dpkg-dev debhelper cdbs python3-dev python3-setuptools
@@ -52,6 +52,6 @@ dpkg:
 	touch dpkg
 
 dpkg-file:
-	@echo $(shell ls ../packrat-agent_*.deb):xenial
+	@echo $(shell ls ../packrat-agent_*.deb):bionic
 
-.PHONY:: dpkg-distros dpkg-requires dpkg-file
+.PHONY:: dpkg-blueprints dpkg-requires dpkg-file
